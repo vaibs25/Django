@@ -1,0 +1,179 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  font-family: Arial;
+  color: white;
+}
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  background-color: #F5F5DC;
+}
+
+.right {
+  right: 0;
+  background-color: #696969;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+</style>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="title" content="project">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="English">
+  <meta name="author" content="vinayak sharma">
+
+  <title>{{title}}</title>
+
+
+  <!-- bootstrap file -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- bootstrap file-->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <!-- main css -->
+  <link rel="stylesheet" type="text/css" href="{% static "index.css" %}" />
+
+
+  <!-- message here -->
+
+  {% if messages %}
+  {% for message in messages %}
+
+  <script>
+    alert("{{ message }}");
+  </script>
+
+  {% endfor %}
+  {% endif %}
+
+  <!--_______________________________________________-->
+
+
+
+</head>
+
+<body class="container-fluid">
+
+
+  <header class="row">
+
+    <!-- navbar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a style="color:white" class="navbar-brand" class="styleheader" href="{% url "index" %}">Library Management System</a>
+        </div>
+        <div class="collapse navbar-collapse" id="mainNavBar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a style="color:white" href="{% url "index" %}">Home</a></li>
+
+            {% if user.is_authenticated %}
+            <li><a style="color:white" href="{% url "logout" %}"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Logout</a></li>
+            {% else %}
+            <li><a style="color:white" href="{% url "register" %}"><span class="glyphicon glyphicon-user"></span> &nbsp; Sign up</a></li>
+            <li><a style="color:white" href="{% url "login" %}"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Log in</a></li>
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <br/>
+  <br>
+  <br>
+  <div class="row">
+    {% block start %}
+    {% if user.is_authenticated %}
+    <style>
+    body {
+    background-image: url('static/img_2.png');
+    }
+    </style>
+    <center><h1 style="background-color:CadetBlue;color:LightCyan">Welcome to Library Management System {{user.username}}!</h1></center>
+<br>
+    <br>
+}
+    p.solid {border-style: solid;}
+    <h3 style="padding: 8px 1px; background-color:LightCyan;color:blue" align="center">
+    <a href="/add_book"><p class="solid">Add Books</a></h3>
+      <br>
+    <br>
+    <h3 style="padding: 8px 1px; background-color:LightCyan;color:blue" align="center">
+    <a href="/allbooks">View All Books</a></h3>
+      <br>
+    <br>
+    <h3 style="padding: 8px 1px; background-color:LightCyan;color:blue" align="center">
+    <a href="/update">Update Books</a></h3>
+
+    {% else %}
+
+    <div class="split left">
+  <div class="centered">
+    <a href="/login"><img src="static/img_1.png" alt="Admin Login"></a>
+    <h2>Admin Login</h2>
+    <b><h5><p>For Staff</p><h5></b>
+  </div>
+</div>
+
+<div class="split right">
+  <div class="centered">
+    <a href="/allbooks"><img src="static/img.png" alt="Student"></a>
+    <h2 style="color:white;">Student</h2>
+    <b><h5 style="color:white;"><p>View Available Books</p><h5><b>
+  </div>
+</div>
+
+    {% endif %}
+    {% endblock %}
+  </div>
+
+
+</body>
+
+</html>
